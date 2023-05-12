@@ -1,0 +1,63 @@
+<!-- HTML form -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Document</title>
+</head>
+<body>
+<!-- add_form.html -->
+<form id="add_user_form">
+    {% csrf_token %}
+    <div>
+        <label for="f_name">First Name:</label>
+        <input id="f_name" name="f_name" required type="text">
+    </div>
+    <div>
+        <label for="l_name">Last Name:</label>
+        <input id="l_name" name="l_name" required type="text">
+    </div>
+    <div>
+        <label for="email_id">Email:</label>
+        <input id="email_id" name="email_id" required type="email">
+    </div>
+    <div>
+        <label for="phone_number">Phone:</label>
+        <input id="phone_number" name="phone_number" required type="tel">
+    </div>
+    <div>
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+    </div>
+    <button id="add_user_btn" type="submit">Add User</button>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+      $('#add_user_form').on('submit', function(e) {
+        e.preventDefault();
+        $.ajax({
+          url: '/api/add_user/',
+          method: 'POST',
+          headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          data: $(this).serialize(),
+          success: function(data) {
+            console.log(data);
+            alert('User added successfully!');
+          },
+          error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            alert('There was an error adding the user. Please try again later.');
+          }
+        });
+      });
+    });
+
+</script>
+
+
+</body>
+</html>
